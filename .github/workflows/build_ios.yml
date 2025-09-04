@@ -27,7 +27,7 @@ jobs:
       # 或者恢复整个解决方案：dotnet restore YourSolution.sln
 
     - name: Build iOS project (Release)
-      run: dotnet build --project osu.ios.slnf -c Release
+      run: dotnet build osu.ios.slnf -c Release
       # 如果构建失败，可以添加 --verbosity detailed 查看详细日志
 
     - name: Find and list generated files
