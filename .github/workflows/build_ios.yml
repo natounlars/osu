@@ -19,12 +19,11 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: | 
-          '8.0.x'
-          '7.0.x'
+          '8.0.413'
         # 根据你的项目需求调整版本，可以指定多个版本
 
     - name: Restore NuGet packages
-      run: dotnet restore --project osu.ios.slnf
+      run: dotnet workload restore
       # 或者恢复整个解决方案：dotnet restore YourSolution.sln
 
     - name: Build iOS project (Release)
