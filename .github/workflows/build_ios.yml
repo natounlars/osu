@@ -1,0 +1,49 @@
+name: Build iOS IPA
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: # 允许手动触发构建
+
+jobs:
+  build-ios:
+    runs-on: macos-latest # 必须使用 macOS 环境
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: | 
+          '8.0.x'
+          '7.0.x'
+        # 根据你的项目需求调整版本，可以指定多个版本
+
+    - name: Restore NuGet packages
+      run: dotnet restore --project osu.ios.slnf
+      # 或者恢复整个解决方案：dotnet restore YourSolution.sln
+
+    - name: Build iOS project (Release)
+      run: dotnet build --project osu.ios.slnf -c Release
+      # 如果构建失败，可以添加 --verbosity detailed 查看详细日志
+
+    - name: Find and list generated files
+      run: |
+        find . -name "*.ipa" -type f | head -n 10
+        find . -name "*.app" -type f | head -n 10
+      # 这个步骤帮助定位生成的 IPA 文件路径
+
+    - name: Upload IPA artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: iOS-IPA-Build
+        path: | 
+          **/*.ipa
+          **/bin/iPhone/Release/*.ipa
+          **/bin/Release/*.ipa
+        if-no-files-found: warn
+      # 尝试多个可能路径，确保找到 IPA 文件
