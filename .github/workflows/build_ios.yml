@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: | 
-          '8.0.413'
+          '8'
         # 根据你的项目需求调整版本，可以指定多个版本
 
     - name: Restore NuGet packages
