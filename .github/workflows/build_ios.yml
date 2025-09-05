@@ -27,7 +27,7 @@ jobs:
       # 或者恢复整个解决方案：dotnet restore YourSolution.sln
 
     - name: Build iOS project (Release)
-      run: dotnet build osu.ios.slnf -c Release
+      run: dotnet build osu.iOS -c Release
       # 如果构建失败，可以添加 --verbosity detailed 查看详细日志
 
     - name: Find and list generated files
@@ -44,5 +44,7 @@ jobs:
           **/*.ipa
           **/bin/iPhone/Release/*.ipa
           **/bin/Release/*.ipa
+          **/osu.iOS/bin/Release/net8.0-ios/*.ipa
+          **/osu.iOS/bin/Release/net8.0-ios/iossimulator-x64/*.ipa
         if-no-files-found: warn
       # 尝试多个可能路径，确保找到 IPA 文件
